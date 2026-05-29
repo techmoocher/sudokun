@@ -78,14 +78,16 @@ make update-po
 
 If you intend to add/update the translation, please follow the guidelines below:
 
-1. Fork this repository and create a new git branch with language abbreviation as a name, 
-e.g. `vi` for Vietnamese, `es` for Español,etc.:
+1. Fork this repository and create a new git branch with language abbreviation as a name 
+(e.g. `vi` for Vietnamese, `es` for Español, etc.):
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/sudokun.git      # Replace YOUR_USERNAME with your actual username
+git clone https://github.com/YOUR_USERNAME/sudokun.git
 cd sudokun
 git checkout -b vi
 ```
+
+> Replace `YOUR_USERNAME` with your actual username.
 
 2. If you want to add a new translation, add language to `po/LINGUAS` and create `.po` file:
 
