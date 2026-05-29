@@ -58,42 +58,52 @@ See `man nudoku` to learn more.
 For i18n support, you need to set the `LANGUAGE` variable:
 
 ```sh
-export LANGUAGE=lang
+export LANGUAGE=lang    # Replace lang with your desired translation
 ```
 
-Where `lang` is the translation of choice. See the list of supported languages in `po/LINGUAS` file.
+> Learn more about the list supported languages in [`po/LINGUAS`](./po/LINGUAS).
 
 ## Contributing
 
-If you plan to add/update the translation please follow these guidelines with examples:
+If you add any changes to source code, make sure to update potfiles in the `po/` directory:
 
-1. Fork this repository and create a new git branch with language abbreviation as a name, e.g. `es`:
-```sh
-cd nudoku # your forked git repository
-git checkout -b es
-```
-2. For new translation add language to `po/LINGUAS` and create `.po` file:
-```sh
-echo es >> po/LINGUAS && cp po/nudoku.pot po/es.po
-```
-3. Replace placeholders in uppercase in the head of the file with your information. Add translations for *(preferably)* each `msgid`.
-4. Check your `.po` file with `msgfmt` for any errors:
-```sh
-msgfmt es.po # should not produce any output
-```
-5. Push your branch to remote and create PR:
-```sh
-git push origin es
-```
-
-If you add changes to source code make sure to update potfiles as well:
-```sh
-cd po # if you inside nudoku directory
+```bash
+cd path/to/your/sudokun/dir/po      # Replace the destination with your actual path
 make update-po
 ```
 
+### Translation
 
-## Bugtracker ##
+If you intend to add/update the translation, please follow the guidelines below:
 
-https://github.com/jubalh/nudoku/issues
+1. Fork this repository and create a new git branch with language abbreviation as a name, 
+e.g. `vi` for Vietnamese, `es` for Español,etc.:
 
+```bash
+git clone https://github.com/YOUR_USERNAME/sudokun.git      # Replace YOUR_USERNAME with your actual username
+cd sudokun
+git checkout -b vi
+```
+
+2. If you want to add a new translation, add language to `po/LINGUAS` and create `.po` file:
+
+> Skip this step if you intend to update an existing language.
+
+```bash
+echo vi >> po/LINGUAS && cp po/sudokun.pot po/vi.po
+```
+
+3. Replace uppercased placeholders at the head of the file with your contact information. 
+Then, add/update translation(s) for, if possible, all the `msgid`.
+
+4. Check your `.po` file with `msgfmt` for any errors:
+
+```bash
+msgfmt vi.po    # Expecting no output
+```
+
+5. Push your branch to remote and create a PR:
+
+```bash
+git push origin es
+```
