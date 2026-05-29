@@ -33,9 +33,11 @@ git clone https://github.com/techmoocher/sudokun.git
 cd sudokun
 autoreconf -i
 ./configure
-make # Use -DDEBUG option if you want the debug output
+make
 ./src/sudokun
 ```
+
+> Use `make -DDEBUG` to see the debug output.
 
 Add `-DDEBUG` to `make` to have some debug output.
 
