@@ -13,7 +13,7 @@ nudoku is easily installable via many package managers.
 
 **Dependencies:**
 - ncurses
-- cairo (optional: for PDF/PNG export)
+- cairo *(optional)* ***(required if using PDF/PNG export)**
 
 ### Building from source
 
@@ -26,7 +26,7 @@ make
 ./src/sudokun
 ```
 
-If you decide to go by the git version, run the below commands instead:
+You can also go by the git version:
 
 ```bash
 git clone https://github.com/techmoocher/sudokun.git
