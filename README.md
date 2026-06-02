@@ -13,7 +13,7 @@ nudoku is easily installable via many package managers.
 
 **Dependencies:**
 - ncurses
-- cairo *(optional)* ***(required if using PDF/PNG export)**
+- cairo *(optional)* ***(required if using PDF/PNG export)***
 
 ### Building from source
 
