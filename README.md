@@ -3,11 +3,11 @@
 **sudokun** is an ncurses-based sudoku game for CLI. Sudoku's long been my favorite activities to entertain. 
 However, sometimes, I simply don't want to leave the terminal. That's why **sudokun** was born!
 
-Big shout-out to **[jubalh/nudoku](https://github.com/jubalh/nudoku.git)** for huge inspiration!!!
+Big shout-out to **[jubalh/nudoku](https://github.com/jubalh/nudoku.git)** for the huge work and inspiration!!!
 
 ## Installation
 
-nudoku is easily installable via many package managers.
+sudokun can be easily installed via many package managers.
 
 [![Packaging status](https://repology.org/badge/tiny-repos/nudoku.svg)](https://repology.org/project/nudoku/versions)
 
@@ -37,14 +37,12 @@ make
 ./src/sudokun
 ```
 
-> Use `make -DDEBUG` to see the debug output.
+**Note:** Use `make -DDEBUG` to see the debug output.
 
-Add `-DDEBUG` to `make` to have some debug output.
+**Note:** If you want to export sudokus to a PDF or a PNG file, 
+make sure to have `cairo` installed and configured with:
 
-nudoku can also output sudokus in PDF and PNG format (see `man nudoku` -p/-i/-n).
-You need to have cairo installed and configure with:
-
-```sh
+```bash
 ./configure --enable-cairo
 ```
 
@@ -55,15 +53,15 @@ To print two PDF pages with 8 hard sudokus run `nudoku -p riddle.pdf -n 8 -d har
 To get a PNG with an easy sudoku run `nudoku -i sudoku.png -d easy`.
 See `man nudoku` to learn more.
 
-## I18n ##
+## I18n
 
-For i18n support, you need to set the `LANGUAGE` variable:
+For i18n support, make sure to set the `LANGUAGE` variable:
 
-```sh
+```bash
 export LANGUAGE=lang    # Replace lang with your desired translation
 ```
 
-> Learn more about the list supported languages in [`po/LINGUAS`](./po/LINGUAS).
+Learn more about the list supported languages in [`po/LINGUAS`](./po/LINGUAS).
 
 ## Contributing
 
