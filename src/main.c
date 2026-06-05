@@ -3,8 +3,8 @@
  *
  * Copyright (C) 2026 Benjamin Nguyen (techmoocher)
  *
- * LICENSE:
- *
+ * LICENSE: GPLv3+
+ * 
  * This program is free software: you can redistribute it and/or modify 
  * it under the terms of the GNU General Public License as published by 
  * the Free Software Foundation, either version 3 of the License, or 
@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- */
+*/
 
 /*** INCLUDES ***/
 
-#include "utils.h"              // utilities
-#include "sudoku.h"             // sudoku-related functions
+#include "utils.h"
+#include "sudoku.h"
 
 #include <stdlib.h>             // rand, srand
 #include <unistd.h>             // getopt
@@ -31,13 +31,13 @@
 #include <time.h>               // time
 #include <string.h>             // strcmp, strlen
 #include <locale.h>             // setlocale
-
 #ifdef ENABLE_CAIRO
-#include "outp.h"               // output functions
+#include "outp.h"               // PDF/PNG exports
 #endif
 
+
 /*** MACROS ***/
-// #define VERSION               "0.1" //gets set via autotools
+#define VERSION               "1.0.0" // gets set via autotools
 #define GRID_LINES              19
 #define GRID_COLS               37
 #define GRID_Y                  3
@@ -59,7 +59,7 @@
 #define COLOR_HIGHLIGHT         4
 #define COLOR_HIGHLIGHT_CURSOR  5
 #define COLOR_USER_HIGHLIGHT    6
-#define UNDO_STACK_SIZE         SUDOKU_LENGTH * 10 // arbitrary length. overflows shouldn't cause an error, just a limit in history length.
+#define UNDO_STACK_SIZE         SUDOKU_LENGTH * 10 // arbitrary length (history length limit)
 #define STATE_FILE_NAME         "state.save"
 
 #ifdef DEBUG
@@ -74,40 +74,46 @@ typedef struct move
 } move_t;
 
 /*** GLOBALS ***/
-static bool  g_useColor = true;
-static bool  g_playing = false;
-static bool  g_useHighlights = false;
-static bool  g_output_stream = false;       // -o flag
-static char* g_provided_stream = NULL;      // -s <input_stream> flag
-static bool  g_resume_game = false;         // -r flag + available saved game
-static int   g_resume_level;                // difficulty of the saved game
-static int   g_hint_counter;
-static char  plain_board[STREAM_LENGTH];
-static char  user_board[STREAM_LENGTH];
-static char* g_outputFilename = NULL;       // -p/-i <expected_filename> flag
-static int   g_sudokuCount = 1;             // -p <.pdf> -n <number> for the numbers of in the PDF
-static PAPER_SIZE g_pdfSize = PS_DEFAULT;   // -S <paper_size>
-static bool  g_outIsPDF;
-static DIFFICULTY g_level = D_EASY;
-static WINDOW *grid, *infobox, *status;
-static move_t	g_undo_stack[UNDO_STACK_SIZE];
-static int   g_undo_stack_index = 0;
+static bool         g_useColor              = true;
+static bool         g_useHighlights         = false;
+static WINDOW       *grid, *infobox, *status;
 
-/* FUNCTIONS */
-static void print_version(void)
-{
-	printf("nudoku version " VERSION "\n\n\
-Copyright (C) Michael Vetter 2014 - 2024\n\
-License GPLv3+: GNU GPL version 3 or later.\n\
-This is free software, you are free to modify and redistribute it.\n");
+static char         plain_board[STREAM_LENGTH];
+static char         user_board[STREAM_LENGTH];
+static DIFFICUTLY   g_difficulty            = D_EASY;
+static int          g_hint_count            = 0;
+static bool         g_playing               = false;
+
+static bool         g_resume_game           = false;    // -r flag
+static int          g_resume_level;                     // difficulty of the saved game
+
+static move_t       g_undo_stack[UNDO_STACK_SIZE];
+static int          g_undo_stack_index = 0;
+
+
+static bool         g_output_stream         = false;    // -o flag
+static char*        g_provided_stream       = NULL;     // -s <input_stream> flag
+static char*        g_outputFilename        = NULL;     // -p/-i <expected_filename> flag
+
+
+static bool         g_outIsPDF = false;
+static int          g_sudokuCount = 1;                  // -p <.pdf> -n <number>
+static PAPER_SIZE   g_pdfSize = PS_DEFAULT;             // -S <paper_size>
+
+
+/*** FUNCTIONS ***/
+static void print_version(void) {
+    printf("sudokun version " VERSION "\n\n\
+Copyright (C) 2026 Benjamin \"techmoocher\" Nguyen.\n\
+Licensed under the GPLv3+ (GNU GPL version 3 or later).\n\
+This is free software, you are free to use, modify, and redistribute it.\n");
 #ifdef DEBUG
-	printf("Debug enabled\n");
+    printf("DEBUG enabled\n");
 #endif // DEBUG
 }
 
-static void print_usage(void)
-{
-	printf(_("nudoku [option]\n\n"));
+static void print_usage(void) {
+	printf(_("nudoku [options]\n\n"));
 	printf(_("Options:\n"));
 	printf(_("-h help:\t\tPrint this help\n"));
 	printf(_("-v version:\t\tPrint version\n"));
