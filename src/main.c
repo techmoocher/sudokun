@@ -92,7 +92,7 @@ static move_t       g_undo_stack[UNDO_STACK_SIZE];
 
 static bool         g_output_stream         = false;    // -o flag
 static char*        g_provided_stream       = NULL;     // -s <input_stream> flag
-static char*        g_outputFilename        = NULL;     // -p/-i <expected_filename> flag
+	static char*        g_outputFilename        = NULL;     // -p/-P <expected_filename> flag
 
 static bool         g_outIsPDF = false;
 static PAPER_SIZE   g_pdfSize = PS_DEFAULT;             // -S <paper_size>
@@ -121,7 +121,7 @@ static void print_help(void) {
     printf(_("-s stream:\t\tUser provided sudoku stream\n"));
     printf(_("-p filename:\t\tOutput PDF\n"));
     printf(_("-S papername:\t\tPDF paper size (e.g., 'a4', 'letter', 'legal'; default 'a4') or 'WIDTHxHEIGHT[unit]'\n"));
-    printf(_("-i filename:\t\tOutput PNG image\n"));
+	printf(_("-P filename:\t\tOutput PNG image\n"));
 }
 
 static bool is_valid_stream(char *s) {
@@ -287,7 +287,7 @@ void generate_stream_output(int difficulty) {
 
 static void parse_arguments(int argc, char *argv[]) {
 	int opt;
-	while ((opt = getopt(argc, argv, "hvcors:d:p:i:S:")) != -1) {
+	while ((opt = getopt(argc, argv, "hvcors:d:p:P:S:")) != -1) {
 		switch (opt) {
 			case 'h':
 				print_help();
@@ -343,7 +343,7 @@ static void parse_arguments(int argc, char *argv[]) {
 				}
 				break;
 			// export png
-			case 'i':
+			case 'P':
 				g_outputFilename = strdup(optarg);
 				g_outIsPDF = false;
 				break;

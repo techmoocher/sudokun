@@ -19,7 +19,7 @@ sudokun \- ncurses-based CLI sudoku game
 \fB\-p\fR \fIexpected_filename.pdf\fR [\fB\-S\fR \fIpaper_size\fR]
 .br
 .BR sudokun
-\fB\-i\fR \fIexpected_filename.png\fR
+\fB\-P\fR \fIexpected_filename.png\fR
 
 .SH DESCRIPTION
 .BR sudokun
@@ -75,10 +75,10 @@ Paper size for PDF output.
 Accepted values are: 'a4' (default), 'a5', 'letter', 'legal', 'oficio', 'invoice', or 'WIDTHxHEIGHT[unit]'. If not given, the unit defaults to centimeters. This can only be used with -p.
 Example: \fBsudokun -p\fR \fIexample.pdf\fR \fB-S\fR \fI11x8.5in\fR
 
-.B \-i
+.B \-P
 Exports a game into a PNG.
 Must be followed by an expected filename.
-Example: \fBsudokun -i\fR \fIsudoku.png\fR
+Example: \fBsudokun -P\fR \fIsudoku.png\fR
 
 .SH KEYBINDINGS
 
