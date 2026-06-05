@@ -49,7 +49,7 @@ make sure to have `cairo` installed and configured with:
 ## Usage
 
 For normal interactive GUI run `nudoku`.
-To print two PDF pages with 8 hard sudokus run `nudoku -p riddle.pdf -n 8 -d hard`.
+To print a PDF with a hard sudoku run `nudoku -p riddle.pdf -d hard`.
 To get a PNG with an easy sudoku run `nudoku -i sudoku.png -d easy`.
 See `man nudoku` to learn more.
 

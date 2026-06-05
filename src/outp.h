@@ -5,6 +5,6 @@
 
 #include "utils.h"
 
-int generate_output(int difficulty, char* filename, int sudokuCount, bool isPDF, PAPER_SIZE paperSize);
+int generate_output(int difficulty, char* filename, bool isPDF, PAPER_SIZE paperSize);
 
 #endif // OUTP_H

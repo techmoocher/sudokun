@@ -1,8 +1,10 @@
 .\" Manpage for sudokun.
 .\" Contact Benjamin Nguyen <ima.techmoocher@gmail.com> in case of bugs or errors.
 .TH SUDOKUN 6 "June 2026" "sudokun v1.0.0" "sudokun man page"
+
 .SH NAME
 sudokun \- ncurses-based CLI sudoku game
+
 .SH SYNOPSIS
 .BR sudokun
 [\-v | \-h]
@@ -14,10 +16,11 @@ sudokun \- ncurses-based CLI sudoku game
 [\fB\-c\fR] \fB\-o\fR
 .br
 .BR sudokun
-\fB\-p\fR \fIexpected_filename.pdf\fR [\fB\-n\fR \fInumber\fR] [\fB\-S\fR \fIpaper_size\fR]
+\fB\-p\fR \fIexpected_filename.pdf\fR [\fB\-S\fR \fIpaper_size\fR]
 .br
 .BR sudokun
 \fB\-i\fR \fIexpected_filename.png\fR
+
 .SH DESCRIPTION
 .BR sudokun
 is an ncurses-based sudoku game designed to help you entertain after\&
@@ -64,24 +67,18 @@ Example: \fBsudokun -s\fR \fI4.....8.5.3..........7......2.....6.....8.4......1.
 .br
 Exports a game into a PDF.
 Must be followed by an expected filename.
-This can be combined with -n to define how many sudokus the PDF should contain.
-Example: \fBsudokun -p\fR \fIexample-sudoku.pdf\fR
+Generates a single sudoku per PDF.
+Example: \fBsudokun -p\fR \fIexample.pdf\fR
 
-.B \-n
-.br
-Number of sudokuks to put in PDF.
-This can only be used with -p.
-Example: -p riddle.pdf -n 8
+.B \-S
+Paper size for PDF output.
+Accepted values are: 'a4' (default), 'a5', 'letter', 'legal', 'oficio', 'invoice', or 'WIDTHxHEIGHT[unit]'. If not given, the unit defaults to centimeters. This can only be used with -p.
+Example: \fBsudokun -p\fR \fIexample.pdf\fR \fB-S\fR \fI11x8.5in\fR
 
 .B \-i
 Exports a game into a PNG.
 Must be followed by an expected filename.
 Example: \fBsudokun -i\fR \fIsudoku.png\fR
-
-.B \-S
-Paper size for PDF output.
-Accepted values are: 'a4' (default), 'a5', 'letter', 'legal', 'oficio', 'invoice', or 'WIDTHxHEIGHT[unit]'. If not given, the unit defaults to centimeters. This can only be used with -p.
-Example: -p riddle.pdf -S 11x8.5in
 
 .SH KEYBINDINGS
 

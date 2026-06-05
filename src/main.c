@@ -78,26 +78,23 @@ static bool         g_useColor              = true;
 static bool         g_useHighlights         = false;
 static WINDOW       *grid, *infobox, *status;
 
-static char         plain_board[STREAM_LENGTH];
-static char         user_board[STREAM_LENGTH];
-static DIFFICUTLY   g_difficulty            = D_EASY;
 static int          g_hint_count            = 0;
 static bool         g_playing               = false;
+static DIFFICUTLY   g_difficulty            = D_EASY;
+static char         plain_board[STREAM_LENGTH];
+static char         user_board[STREAM_LENGTH];
 
 static bool         g_resume_game           = false;    // -r flag
 static int          g_resume_level;                     // difficulty of the saved game
 
+static int          g_undo_stack_index 		= 0;
 static move_t       g_undo_stack[UNDO_STACK_SIZE];
-static int          g_undo_stack_index = 0;
-
 
 static bool         g_output_stream         = false;    // -o flag
 static char*        g_provided_stream       = NULL;     // -s <input_stream> flag
 static char*        g_outputFilename        = NULL;     // -p/-i <expected_filename> flag
 
-
 static bool         g_outIsPDF = false;
-static int          g_sudokuCount = 1;                  // -p <.pdf> -n <number>
 static PAPER_SIZE   g_pdfSize = PS_DEFAULT;             // -S <paper_size>
 
 
@@ -112,66 +109,58 @@ This is free software, you are free to use, modify, and redistribute it.\n");
 #endif // DEBUG
 }
 
-static void print_usage(void) {
-	printf(_("nudoku [options]\n\n"));
-	printf(_("Options:\n"));
-	printf(_("-h help:\t\tPrint this help\n"));
-	printf(_("-v version:\t\tPrint version\n"));
-	printf(_("-c nocolor:\t\tDo not use colors\n"));
-	printf(_("-o output:\t\tOutput stream (inverse of -s)\n"));
-	printf(_("-d difficulty:\t\tChoose between: easy, normal, hard\n"));
-	printf(_("-s stream:\t\tUser provided sudoku stream\n"));
-	printf(_("-r resume:\t\tResume the last saved game\n"));
-	printf(_("-p filename:\t\tOutput PDF\n"));
-	printf(_("-n filename:\t\tNumber of sudokus to put in PDF\n"));
-	printf(_("-i filename:\t\tOutput PNG image\n"));
-	printf(_("-S papername:\t\tPDF paper size (e.g., 'a4', 'letter', 'legal'; default 'a4') or 'WIDTHxHEIGHT[unit]'\n"));
+static void print_help(void) {
+    printf(_("sudokun [OPTIONS]\n\n"));
+    printf(_("Options:\n"));
+    printf(_("-v version:\t\tPrint version\n"));
+    printf(_("-h help:\t\tPrint this help\n"));
+    printf(_("-r resume:\t\tResume the last saved game\n"));
+    printf(_("-c nocolor:\t\tDo not use colors\n"));
+    printf(_("-o output:\t\tOutput stream (inverse of -s)\n"));
+    printf(_("-d difficulty:\t\tChoose between: easy, normal, hard\n"));
+    printf(_("-s stream:\t\tUser provided sudoku stream\n"));
+    printf(_("-p filename:\t\tOutput PDF\n"));
+    printf(_("-S papername:\t\tPDF paper size (e.g., 'a4', 'letter', 'legal'; default 'a4') or 'WIDTHxHEIGHT[unit]'\n"));
+    printf(_("-i filename:\t\tOutput PNG image\n"));
 }
 
-static bool is_valid_stream(char *s)
-{
-	char *p = s;
-	short n = 0;
-	while ((*p) != '\0')
-	{
-		if (n++ > SUDOKU_LENGTH)
-			break;
+static bool is_valid_stream(char *s) {
+    char *p = s;
+    short n = 0;
+    while ((*p) != '\0') {
+        if (n++ > SUDOKU_LENGTH)
+            break;
 
-		if(!((*p >= 49 && *p <= 57) || *p == '.' ))
-		{
-			printf(_("Character %c at position %d is not allowed.\n"), *p, n);
-			return false;
-		}
-		p++;
-	}
+        if(!((*p >= 49 && *p <= 57) || *p == '.' )) {
+            printf(_("Unvalid character %c at position %d.\n"), *p, n);
+            return false;
+        }
+        p++;
+    }
 
-	if (n != SUDOKU_LENGTH )
-	{
-		printf(_("Stream has to be %d characters long.\n"), SUDOKU_LENGTH);
-		return false;
-	}
+    if (n != SUDOKU_LENGTH) {
+        printf(_("Unvalid stream (expecting %d characters long.\n"), SUDOKU_LENGTH);
+        return false;
+    }
 
-	if (!is_valid_puzzle(s))
-	{
-		printf(_("Stream does not represent a valid sudoku puzzle.\n"));
-		return false;
-	}
+    if (!is_valid_puzzle(s)) {
+        printf(_("The provided stream is not a sudoku puzzle.\n"));
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
-char* get_saved_file_path(void)
-{
-	char* home_path = getenv("XDG_STATE_HOME");
-	char* fallback_path = NULL;
+char* get_saved_file_path(void) {
+    char* home_path = getenv("XDG_STATE_HOME");
+    char* fallback_path = NULL;
 
-	if (home_path == NULL)
-	{
-		// fallback to $HOME/.local/state
-		home_path = getenv("HOME");
+    if (home_path == NULL) {
+        // fallback to $HOME/.local/state
+        home_path = getenv("HOME");
 
-		if (home_path == NULL)
-			return NULL;
+        if (home_path == NULL)
+            return NULL;
 
 		const char* local_path = "/.local/state";
 		size_t len_home_path = strlen(home_path);
@@ -250,11 +239,10 @@ bool get_board_save(char user_board[], char plain_board[])
 	strcpy(plain_board, board + STREAM_LENGTH);
 	strcpy(tmp_board, plain_board);
 
-	if (!is_valid_stream(tmp_board))
-		return false;
+    if (!is_valid_stream(tmp_board))
+        return false;
 
-	// set difficulty level from save
-	int count = 0;
+    int count = 0;
 	const char *tmp = plain_board;
 	while((tmp = strchr(tmp, '.')) != NULL)
 	{
@@ -297,15 +285,12 @@ void generate_stream_output(int difficulty) {
 	free(stream);
 }
 
-static void parse_arguments(int argc, char *argv[])
-{
+static void parse_arguments(int argc, char *argv[]) {
 	int opt;
-	while ((opt = getopt(argc, argv, "hvcors:d:p:i:n:S:")) != -1)
-	{
-		switch (opt)
-		{
+	while ((opt = getopt(argc, argv, "hvcors:d:p:i:S:")) != -1) {
+		switch (opt) {
 			case 'h':
-				print_usage();
+				print_help();
 				exit(EXIT_SUCCESS);
 			case 'v':
 				print_version();
@@ -325,7 +310,7 @@ static void parse_arguments(int argc, char *argv[])
 				if (get_board_save(user_board, plain_board))
 				{
 					g_resume_game = true;
-					g_level = g_resume_level; // set global variables in one place
+					g_difficulty = g_resume_level; // set global variables in one place
 				}
 				else
 				{
@@ -335,53 +320,44 @@ static void parse_arguments(int argc, char *argv[])
 				break;
 			case 'd':
 				if (strcmp(optarg, "easy") == 0)
-					g_level = D_EASY;
+					g_difficulty = D_EASY;
 				else if (strcmp(optarg, "normal") == 0)
-					g_level = D_NORMAL;
+					g_difficulty = D_NORMAL;
 				else if (strcmp(optarg, "hard") == 0)
-					g_level = D_HARD;
-				else
-				{
-					print_usage();
+					g_difficulty = D_HARD;
+				else {
+					print_help();
 					exit(EXIT_FAILURE);
 				}
 				break;
-			// output pdf
+			// export pdf
 			case 'p':
 				g_outputFilename = strdup(optarg);
 				g_outIsPDF = true;
 				break;
-			// output png image
+			case 'S':
+				g_pdfSize = papersize_get(optarg);
+				if (!g_pdfSize.valid) {
+					print_help();
+					exit(EXIT_FAILURE);
+				}
+				break;
+			// export png
 			case 'i':
 				g_outputFilename = strdup(optarg);
 				g_outIsPDF = false;
 				break;
-			// numbers of sudoku for output pdf
-			case 'n':
-				g_sudokuCount = atoi(optarg);
-				break;
 			// PDF paper size
-			case 'S':
-				g_pdfSize = papersize_get(optarg);
-				if (!g_pdfSize.valid) {
-					print_usage();
-					exit(EXIT_FAILURE);
-				}
-				break;
 			default:
-				print_usage();
+				print_help();
 				exit(EXIT_FAILURE);
 		}
 	}
 }
 
-static void cleanup(void)
-{
-	endwin();
-}
+static void cleanup(void) { endwin(); }
 
-static void init_curses(void)
-{
+static void init_curses(void) {
 	initscr();
 	use_default_colors();
 	clear();
@@ -389,9 +365,9 @@ static void init_curses(void)
 	cbreak();
 	noecho();
 
-	if(g_useColor)
+	if (g_useColor)
 	{
-		if(has_colors())
+		if (has_colors())
 		{
 			start_color();
 			init_pair(1, COLOR_GREEN, -1);
@@ -479,8 +455,7 @@ static void _draw_grid()
 	}
 }
 
-static void init_windows(void)
-{
+static void init_windows(void) {
 	keypad(stdscr, true);
 
 	status = newwin(STATUS_LINES, STATUS_COLS, STATUS_Y, STATUS_X);
@@ -498,7 +473,7 @@ static void init_windows(void)
 	wprintw(infobox, "nudoku %s\n", VERSION);
 
 	if (!g_provided_stream)
-		wprintw(infobox, _("level: %s\n\n"), difficulty_to_str(g_level) );
+		wprintw(infobox, _("level: %s\n\n"), difficulty_to_str(g_difficulty) );
 	else
 		wprintw(infobox, "\n\n");
 
@@ -620,7 +595,7 @@ static void fill_grid(char *user_board, char *plain_board, int x_cursor, int y_c
 
 static void new_puzzle(void)
 {
-	int holes = g_level;
+	int holes = g_difficulty;
 	char* stream;
 
 	if (g_provided_stream)
@@ -680,39 +655,35 @@ int main(int argc, char *argv[])
 
 	if (g_output_stream)
 	{
-		generate_stream_output(g_level);
+		generate_stream_output(g_difficulty);
 		return EXIT_SUCCESS;
 	}
 
-	if (g_outputFilename)
-	{
+	if (g_outputFilename) {
 #ifdef ENABLE_CAIRO
-		return generate_output(g_level, g_outputFilename, g_sudokuCount, g_outIsPDF, g_pdfSize);
+        return generate_output(g_difficulty, g_outputFilename, g_outIsPDF, g_pdfSize);
 #else
-		printf(_("nudoku is compiled without cairo support.\n"));
-		printf(_("To use the output feature, please compile with --enable-cairo.\n"));
-		return 1;
+        printf(_("sudokun was compiled without cairo.\n"));
+        printf(_("To export sudokus, please compile with '--enable-cairo'.\n"));
+        return 1;
 #endif
-	}
+    }
 
-	init_curses();
-	init_windows();
+    init_curses();
+    init_windows();
 
 #ifdef DEBUG
-	strcpy(plain_board, EXAMPLE_STREAM);
-	strcpy(user_board, EXAMPLE_STREAM);
-	fill_grid(plain_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
-	g_playing = true;
+    strcpy(plain_board, EXAMPLE_STREAM);
+    strcpy(user_board, EXAMPLE_STREAM);
+    fill_grid(plain_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
+    g_playing = true;
 #else
-
-	if ( g_resume_game )
-	{
-		fill_grid(user_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
-		g_playing = true;
-	}
-	else
-		new_puzzle();
-
+    if (g_resume_game) {
+        fill_grid(user_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
+        g_playing = true;
+    }
+    else
+        new_puzzle();
 #endif // DEBUG
 
 	refresh();
@@ -820,7 +791,7 @@ int main(int argc, char *argv[])
 					g_playing = false;
 				}
 				break;
-			case 'N':
+	    	case 'N':
 				g_useHighlights = false;
 				g_hint_counter = 0;
 				g_undo_stack_index = 0;
