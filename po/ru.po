@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: nudoku\n"
-"Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
-"POT-Creation-Date: 2026-04-12 11:44-0700\n"
+"Report-Msgid-Bugs-To: ima.techmoocher@gmail.com\n"
+"POT-Creation-Date: 2026-06-05 10:50+0700\n"
 "PO-Revision-Date: 2026-04-12 11:44-0700\n"
 "Last-Translator: Max Vetrov <maxvetrov555@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -17,71 +17,77 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/main.c:107
-#, c-format
+#: src/main.c:498
+msgid " G - Save\n"
+msgstr " G - Сохранить\n"
+
+#: src/main.c:492
+msgid " H - Give a hint\n"
+msgstr " H - Дать подсказку\n"
+
+#: src/main.c:497
+msgid " N - New puzzle\n"
+msgstr " N - Новая головоломка\n"
+
+#: src/main.c:499
+msgid " Q - Quit\n"
+msgstr " Q - Выход\n"
+
+#: src/main.c:501
+msgid " S - Solve puzzle\n"
+msgstr " S - Решить головоломку\n"
+
+#: src/main.c:491
+msgid " c - Check solution\n"
+msgstr " c - Проверить решение\n"
+
+#: src/main.c:486
+msgid " h - Move left\n"
+msgstr " h - Влево\n"
+
+#: src/main.c:487
+msgid " j - Move down\n"
+msgstr " j - Вниз\n"
+
+#: src/main.c:488
+msgid " k - Move up\n"
+msgstr " k - Вверх\n"
+
+#: src/main.c:489
 msgid ""
-"nudoku [option]\n"
+" l - Move right\n"
 "\n"
 msgstr ""
-"nudoku [опция]\n"
+" l - Вправо\n"
 "\n"
 
-#: src/main.c:108
-#, c-format
-msgid "Options:\n"
-msgstr "Параметры:\n"
+#: src/main.c:495
+msgid " m - Toggle marks\n"
+msgstr " m - Переключить метки\n"
 
-#: src/main.c:109
-#, c-format
-msgid "-h help:\t\tPrint this help\n"
-msgstr "-h help:\t\tПоказать эту справку\n"
+#: src/main.c:500
+msgid " r - Redraw\n"
+msgstr " r - Перерисовка\n"
 
-#: src/main.c:110
-#, c-format
-msgid "-v version:\t\tPrint version\n"
-msgstr "-v version:\t\tПоказать версию\n"
+#: src/main.c:503
+msgid " u - Undo previous action\n"
+msgstr " u - Отменить предыдущее действие\n"
 
-#: src/main.c:111
+#: src/main.c:837
 #, c-format
-msgid "-c nocolor:\t\tDo not use colors\n"
-msgstr "-c nocolor:\t\tНе использовать цвета\n"
+msgid " with the help of %d hints"
+msgstr " с помощью %d подсказок"
 
-#: src/main.c:112
+#: src/main.c:502
+msgid " x - Delete number\n"
+msgstr " x - Удалить число\n"
+
+#: src/main.c:124
 #, c-format
-msgid "-o output:\t\tOutput stream (inverse of -s)\n"
-msgstr "-o output:\t\tВывод потока (обратно параметру -s)\n"
+msgid "-P filename:\t\tOutput PNG image\n"
+msgstr "-P filename:\t\tВывод в PNG изображение\n"
 
-#: src/main.c:113
-#, c-format
-msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
-msgstr "-d difficulty:\t\tВыбрать сложность: easy, normal, hard\n"
-
-#: src/main.c:114
-#, c-format
-msgid "-s stream:\t\tUser provided sudoku stream\n"
-msgstr "-s stream:\t\tПредоставленный пользователем поток судоку\n"
-
-#: src/main.c:115
-#, c-format
-msgid "-r resume:\t\tResume the last saved game\n"
-msgstr "-r resume:\t\tВозобновить последнюю сохраненную игру\n"
-
-#: src/main.c:116
-#, c-format
-msgid "-p filename:\t\tOutput PDF\n"
-msgstr "-p filename:\t\tВывод в PDF\n"
-
-#: src/main.c:117
-#, c-format
-msgid "-n filename:\t\tNumber of sudokus to put in PDF\n"
-msgstr "-n filename:\t\tКоличество судоку для добавления в PDF\n"
-
-#: src/main.c:118
-#, c-format
-msgid "-i filename:\t\tOutput PNG image\n"
-msgstr "-i filename:\t\tВывод в PNG изображение\n"
-
-#: src/main.c:119
+#: src/main.c:123
 #, c-format
 msgid ""
 "-S papername:\t\tPDF paper size (e.g., 'a4', 'letter', 'legal'; default "
@@ -90,28 +96,120 @@ msgstr ""
 "-S papername:\t\tРазмер бумаги для PDF (например, 'a4', 'letter', 'legal'; "
 "по умолчанию 'a4') или 'ШИРИНАxВЫСОТА[единица]'\n"
 
-#: src/main.c:133
+#: src/main.c:118
 #, c-format
-msgid "Character %c at position %d is not allowed.\n"
-msgstr "Символ %c на позиции %d недопустим.\n"
+msgid "-c nocolor:\t\tDo not use colors\n"
+msgstr "-c nocolor:\t\tНе использовать цвета\n"
 
-#: src/main.c:141
+#: src/main.c:120
 #, c-format
-msgid "Stream has to be %d characters long.\n"
-msgstr "Поток должен быть длиною %d символов.\n"
+msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
+msgstr "-d difficulty:\t\tВыбрать сложность: easy, normal, hard\n"
 
-#: src/main.c:147
+#: src/main.c:116
 #, c-format
-msgid "Stream does not represent a valid sudoku puzzle.\n"
-msgstr "Поток не является судоку-головоломкой.\n"
+msgid "-h help:\t\tPrint this help\n"
+msgstr "-h help:\t\tПоказать эту справку\n"
 
-#: src/main.c:318
+#: src/main.c:119
+#, c-format
+msgid "-o output:\t\tOutput stream (inverse of -s)\n"
+msgstr "-o output:\t\tВывод потока (обратно параметру -s)\n"
+
+#: src/main.c:122
+#, c-format
+msgid "-p filename:\t\tOutput PDF\n"
+msgstr "-p filename:\t\tВывод в PDF\n"
+
+#: src/main.c:117
+#, c-format
+msgid "-r resume:\t\tResume the last saved game\n"
+msgstr "-r resume:\t\tВозобновить последнюю сохраненную игру\n"
+
+#: src/main.c:121
+#, c-format
+msgid "-s stream:\t\tUser provided sudoku stream\n"
+msgstr "-s stream:\t\tПредоставленный пользователем поток судоку\n"
+
+#: src/main.c:115
+#, c-format
+msgid "-v version:\t\tPrint version\n"
+msgstr "-v version:\t\tПоказать версию\n"
+
+#: src/main.c:891
+msgid "Can't save the game!"
+msgstr "Не удалось сохранить игру!"
+
+#: src/main.c:490
+msgid "Commands\n"
+msgstr "Команды\n"
+
+#: src/main.c:845
+msgid "Correct so far"
+msgstr "Пока верно"
+
+#: src/main.c:317
 #, c-format
 msgid "Game save is missing or corrupted, try starting new game.\n"
 msgstr ""
 "Сохранение игры отсутствует или повреждено, попробуйте начать новую игру.\n"
 
-#: src/main.c:396
+#: src/main.c:800
+msgid "Generating puzzle..."
+msgstr "Генерация головоломки..."
+
+#: src/main.c:485
+msgid "Movement\n"
+msgstr "Движение\n"
+
+#: src/main.c:826
+msgid "Not correct"
+msgstr "Неправильно"
+
+#: src/main.c:114
+#, c-format
+msgid "Options:\n"
+msgstr "Параметры:\n"
+
+#: src/main.c:875
+msgid "Provided hint"
+msgstr "Предоставлена подсказка"
+
+#: src/main.c:888
+msgid "Saved!"
+msgstr "Сохранено!"
+
+#: src/main.c:790 src/main.c:832
+msgid "Solved"
+msgstr "Решено"
+
+#: src/main.c:784
+msgid "Solving puzzle..."
+msgstr "Решение головоломки..."
+
+#: src/main.c:147
+#, fuzzy, c-format
+msgid "The provided stream is not a sudoku puzzle.\n"
+msgstr "Поток не является судоку-головоломкой.\n"
+
+#: src/main.c:667
+#, fuzzy, c-format
+msgid "To export sudokus, please compile with '--enable-cairo'.\n"
+msgstr ""
+"Чтобы использовать функцию вывода, скомпилируйте с параметром --enable-"
+"cairo.\n"
+
+#: src/main.c:135
+#, fuzzy, c-format
+msgid "Unvalid character %c at position %d.\n"
+msgstr "Символ %c на позиции %d недопустим.\n"
+
+#: src/main.c:142
+#, fuzzy, c-format
+msgid "Unvalid stream (expecting %d characters long.\n"
+msgstr "Поток должен быть длиною %d символов.\n"
+
+#: src/main.c:386
 msgid ""
 "Your terminal doesn't support colors.\n"
 "Try the nocolor (-c) option.\n"
@@ -119,7 +217,15 @@ msgstr ""
 "Ваш терминал не поддерживает цвета.\n"
 "Попробуйте опцию без цвета (-c).\n"
 
-#: src/main.c:487
+#: src/sudoku.c:284
+msgid "easy"
+msgstr "Легкий"
+
+#: src/sudoku.c:279
+msgid "hard"
+msgstr "Сложный"
+
+#: src/main.c:476
 #, c-format
 msgid ""
 "level: %s\n"
@@ -128,144 +234,33 @@ msgstr ""
 "Уровень: %s\n"
 "\n"
 
-#: src/main.c:496
-msgid "Movement\n"
-msgstr "Движение\n"
-
-#: src/main.c:497
-msgid " h - Move left\n"
-msgstr " h - Влево\n"
-
-#: src/main.c:498
-msgid " j - Move down\n"
-msgstr " j - Вниз\n"
-
-#: src/main.c:499
-msgid " k - Move up\n"
-msgstr " k - Вверх\n"
-
-#: src/main.c:500
-msgid ""
-" l - Move right\n"
-"\n"
-msgstr ""
-" l - Вправо\n"
-"\n"
-
-#: src/main.c:501
-msgid "Commands\n"
-msgstr "Команды\n"
-
-#: src/main.c:502
-msgid " c - Check solution\n"
-msgstr " c - Проверить решение\n"
-
-#: src/main.c:503
-msgid " H - Give a hint\n"
-msgstr " H - Дать подсказку\n"
-
-#: src/main.c:506
-msgid " m - Toggle marks\n"
-msgstr " m - Переключить метки\n"
-
-#: src/main.c:508
-msgid " N - New puzzle\n"
-msgstr " N - Новая головоломка\n"
-
-#: src/main.c:509
-msgid " G - Save\n"
-msgstr " G - Сохранить\n"
-
-#: src/main.c:510
-msgid " Q - Quit\n"
-msgstr " Q - Выход\n"
-
-#: src/main.c:511
-msgid " r - Redraw\n"
-msgstr " r - Перерисовка\n"
-
-#: src/main.c:512
-msgid " S - Solve puzzle\n"
-msgstr " S - Решить головоломку\n"
-
-#: src/main.c:513
-msgid " x - Delete number\n"
-msgstr " x - Удалить число\n"
-
-#: src/main.c:514
-msgid " u - Undo previous action\n"
-msgstr " u - Отменить предыдущее действие\n"
-
-#: src/main.c:678
-#, c-format
-msgid "nudoku is compiled without cairo support.\n"
-msgstr "nudoku скомпилирован без поддержки cairo.\n"
-
-#: src/main.c:679
-#, c-format
-msgid "To use the output feature, please compile with --enable-cairo.\n"
-msgstr ""
-"Чтобы использовать функцию вывода, скомпилируйте с параметром --enable-"
-"cairo.\n"
-
-#: src/main.c:799
-msgid "Solving puzzle..."
-msgstr "Решение головоломки..."
-
-#: src/main.c:805 src/main.c:847
-msgid "Solved"
-msgstr "Решено"
-
-#: src/main.c:815
-msgid "Generating puzzle..."
-msgstr "Генерация головоломки..."
-
-#: src/main.c:841
-msgid "Not correct"
-msgstr "Неправильно"
-
-#: src/main.c:852
-#, c-format
-msgid " with the help of %d hints"
-msgstr " с помощью %d подсказок"
-
-#: src/main.c:860
-msgid "Correct so far"
-msgstr "Пока верно"
-
-#: src/main.c:890
-msgid "Provided hint"
-msgstr "Предоставлена подсказка"
-
-#: src/main.c:903
-msgid "Saved!"
-msgstr "Сохранено!"
-
-#: src/main.c:906
-msgid "Can't save the game!"
-msgstr "Не удалось сохранить игру!"
-
-#: src/sudoku.c:279
-msgid "hard"
-msgstr "Сложный"
-
 #: src/sudoku.c:281
 msgid "normal"
 msgstr "Нормальный"
 
-#: src/sudoku.c:284
-msgid "easy"
-msgstr "Легкий"
-
-#: src/outp.c:172
+#: src/main.c:113
 #, c-format
-msgid "ERROR: Page dimensions are too small for sudokus to fit!\n"
+msgid ""
+"sudokun [OPTIONS]\n"
+"\n"
 msgstr ""
 
-#: src/outp.c:173
+#: src/main.c:666
+#, fuzzy, c-format
+msgid "sudokun was compiled without cairo.\n"
+msgstr "nudoku скомпилирован без поддержки cairo.\n"
+
 #, c-format
-msgid "Please check the dimensions provided in '-S' and try again.\n"
-msgstr ""
+#~ msgid ""
+#~ "nudoku [option]\n"
+#~ "\n"
+#~ msgstr ""
+#~ "nudoku [опция]\n"
+#~ "\n"
+
+#, c-format
+#~ msgid "-n filename:\t\tNumber of sudokus to put in PDF\n"
+#~ msgstr "-n filename:\t\tКоличество судоку для добавления в PDF\n"
 
 #~ msgid "Пока верно"
 #~ msgstr "Soweit richtig"
