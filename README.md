@@ -1,7 +1,9 @@
 # sudokun
 
-**sudokun** is an ncurses-based sudoku game for CLI. Sudoku's long been my favorite activities to entertain. 
-However, sometimes, I simply don't want to leave the terminal. That's why **sudokun** was born!
+**sudokun** is an ncurses-based sudoku game for CLI.
+Sudoku has long been my favorite activities to entertain.
+However, sometimes, I simply don't want to leave the terminal.
+That's why **sudokun** was born!
 
 Big shout-out to **[jubalh/nudoku](https://github.com/jubalh/nudoku.git)** for the huge work and inspiration!!!
 
@@ -12,13 +14,13 @@ sudokun can be easily installed via many package managers.
 [![Packaging status](https://repology.org/badge/tiny-repos/nudoku.svg)](https://repology.org/project/nudoku/versions)
 
 **Dependencies:**
+
 - ncurses
 - cairo *(optional)* ***(required if using PDF/PNG export)***
 
 ### Building from source
 
-Get the latest `.tar.xz` [release](https://github.com/jubalh/nudoku/releases) and extract it. 
-Then run:
+Get the latest `.tar.xz` [release](https://github.com/jubalh/nudoku/releases), extract it, and run:
 
 ```bash
 ./configure
@@ -39,7 +41,7 @@ make
 
 **Note:** Use `make -DDEBUG` to see the debug output.
 
-**Note:** If you want to export sudokus to a PDF or a PNG file, 
+**Note:** If you want to export sudokus to a PDF or a PNG file,
 make sure to have `cairo` installed and configured with:
 
 ```bash
@@ -50,7 +52,7 @@ make sure to have `cairo` installed and configured with:
 
 For normal interactive GUI run `nudoku`.
 To print a PDF with a hard sudoku run `nudoku -p riddle.pdf -d hard`.
-To get a PNG with an easy sudoku run `nudoku -i sudoku.png -d easy`.
+To get a PNG with an easy sudoku run `nudoku -P sudoku.png -d easy`.
 See `man nudoku` to learn more.
 
 ## I18n
@@ -76,7 +78,7 @@ make update-po
 
 If you intend to add/update the translation, please follow the guidelines below:
 
-1. Fork this repository and create a new git branch with language abbreviation as a name 
+1. Fork this repository and create a new git branch with language abbreviation as a name
 (e.g. `vi` for Vietnamese, `es` for Español, etc.):
 
 ```bash
@@ -95,7 +97,7 @@ git checkout -b vi
 echo vi >> po/LINGUAS && cp po/sudokun.pot po/vi.po
 ```
 
-3. Replace uppercased placeholders at the head of the file with your contact information. 
+3. Replace uppercased placeholders at the head of the file with your contact information.
 Then, add/update translation(s) for, if possible, all the `msgid`.
 
 4. Check your `.po` file with `msgfmt` for any errors:
