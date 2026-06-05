@@ -15,7 +15,7 @@ missing
 src/.deps/
 src/Makefile
 src/Makefile.in
-src/nudoku
+src/sudokun
 m4/
 config.*
 ABOUT-NLS
@@ -25,5 +25,5 @@ po/
 !po/LINGUAS
 !po/Makevars
 !po/POTFILES.in
-!po/nudoku.pot
+!po/sudokun.pot
 !po/*.po
