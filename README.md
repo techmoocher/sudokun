@@ -111,3 +111,8 @@ msgfmt vi.po    # Expecting no output
 ```bash
 git push origin es
 ```
+
+### Contributors
+
+<!-- CONTRIBUTORS -start -->
+<!-- CONTRIBUTORS -end -->

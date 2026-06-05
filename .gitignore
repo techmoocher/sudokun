@@ -20,7 +20,7 @@ m4/
 config.*
 ABOUT-NLS
 
-# Restrict translation files uploaded to repo
+# Restrict to only valid translation files
 po/
 !po/LINGUAS
 !po/Makevars
