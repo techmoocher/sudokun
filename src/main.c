@@ -1,62 +1,65 @@
 /*
-vim: noexpandtab:ts=4:sts=4:sw=4
+ * sudokun
+ *
+ * Copyright (C) 2026 Benjamin Nguyen (techmoocher)
+ *
+ * LICENSE:
+ *
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or 
+ * any later version.
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
-nudoku
+/*** INCLUDES ***/
 
-Copyright (C) 2014 - 2024 Michael "jubalh" Vetter - jubalh _a-t_ iodoru.org
+#include "utils.h"              // utilities
+#include "sudoku.h"             // sudoku-related functions
 
-LICENCE:
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+#include <stdlib.h>             // rand, srand
+#include <unistd.h>             // getopt
+#include <sys/types.h>          // stat type
+#include <sys/stat.h>           // stat function
+#include <ncurses.h>            // ncurses
+#include <time.h>               // time
+#include <string.h>             // strcmp, strlen
+#include <locale.h>             // setlocale
 
-/* INCLUDES */
-#include "utils.h"				/* utility definitions */
-#include <stdlib.h>				/* rand, srand */
-#include <unistd.h>				/* getopt */
-#include <sys/types.h>			/* stat type */
-#include <sys/stat.h>			/* stat function */
-#include <ncurses.h>			/* ncurses */
-#include <time.h>				/* time */
-#include <string.h>				/* strcmp, strlen */
-#include <locale.h>				/* setlocale */
-#include "sudoku.h"				/* sudoku functions */
 #ifdef ENABLE_CAIRO
-#include "outp.h"				/* output functions */
+#include "outp.h"               // output functions
 #endif
 
-/* DEFINES */
-//#define VERSION				"0.1" //gets set via autotools
-#define GRID_LINES				19
-#define GRID_COLS				37
-#define GRID_Y					3
-#define GRID_X					3
-#define INFO_LINES				25
-#define INFO_COLS				30
-#define INFO_Y					3
-#define INFO_X					GRID_X + GRID_COLS + 5
-#define GRID_NUMBER_START_Y		1
-#define GRID_NUMBER_START_X		2
-#define GRID_LINE_DELTA			4
-#define GRID_COL_DELTA			2
-#define STATUS_LINES			1
-#define STATUS_COLS				GRID_COLS + INFO_COLS
-#define STATUS_Y				1
-#define STATUS_X				GRID_X
-#define MAX_HINT_RANDOM_TRY		20
-#define SUDOKU_LENGTH			STREAM_LENGTH - 1
-#define COLOR_HIGHLIGHT			4
-#define COLOR_HIGHLIGHT_CURSOR	5
-#define COLOR_USER_HIGHLIGHT	6
-#define UNDO_STACK_SIZE			SUDOKU_LENGTH * 10 // arbitrary length. overflows shouldn't cause an error, just a limit in history length.
+/*** MACROS ***/
+// #define VERSION               "0.1" //gets set via autotools
+#define GRID_LINES              19
+#define GRID_COLS               37
+#define GRID_Y                  3
+#define GRID_X                  3
+#define INFO_LINES              25
+#define INFO_COLS               30
+#define INFO_Y                  3
+#define INFO_X                  GRID_X + GRID_COLS + 5
+#define GRID_NUMBER_START_Y     1
+#define GRID_NUMBER_START_X     2
+#define GRID_LINE_DELTA         4
+#define GRID_COL_DELTA          2
+#define STATUS_LINES            1
+#define STATUS_COLS             GRID_COLS + INFO_COLS
+#define STATUS_Y                1
+#define STATUS_X                GRID_X
+#define MAX_HINT_RANDOM_TRY     20
+#define SUDOKU_LENGTH           STREAM_LENGTH - 1
+#define COLOR_HIGHLIGHT         4
+#define COLOR_HIGHLIGHT_CURSOR  5
+#define COLOR_USER_HIGHLIGHT    6
+#define UNDO_STACK_SIZE         SUDOKU_LENGTH * 10 // arbitrary length. overflows shouldn't cause an error, just a limit in history length.
 #define STATE_FILE_NAME         "state.save"
 
 #ifdef DEBUG
@@ -70,24 +73,24 @@ typedef struct move
     char prev_val;
 } move_t;
 
-/* GLOBALS */
+/*** GLOBALS ***/
 static bool  g_useColor = true;
 static bool  g_playing = false;
 static bool  g_useHighlights = false;
-static bool  g_output_stream = false;		/* is the -o flag set */
-static char* g_provided_stream = NULL;		/* in case of -s flag the user provides the sudoku stream */
-static bool  g_resume_game = false;         /* in case of -r flag and saved game state */
-static int   g_resume_level;                /* store difficulty of the resume game */
+static bool  g_output_stream = false;       // -o flag
+static char* g_provided_stream = NULL;      // -s <input_stream> flag
+static bool  g_resume_game = false;         // -r flag + available saved game
+static int   g_resume_level;                // difficulty of the saved game
 static int   g_hint_counter;
 static char  plain_board[STREAM_LENGTH];
 static char  user_board[STREAM_LENGTH];
-static char* g_outputFilename = NULL;		/* in case -p/-i flag we get a filename passed for outputting */
-static int   g_sudokuCount = 1;				/* in case of -n we can the numbers of sudoku that should end up in the PDf (-p) */
-static PAPER_SIZE g_pdfSize = PS_DEFAULT;	/* in case of -S we get the PDF paper size from its name (a4/letter) */
+static char* g_outputFilename = NULL;       // -p/-i <expected_filename> flag
+static int   g_sudokuCount = 1;             // -p <.pdf> -n <number> for the numbers of in the PDF
+static PAPER_SIZE g_pdfSize = PS_DEFAULT;   // -S <paper_size>
 static bool  g_outIsPDF;
 static DIFFICULTY g_level = D_EASY;
 static WINDOW *grid, *infobox, *status;
-static move_t	g_undo_stack[UNDO_STACK_SIZE];	/* Stack of previous moves */
+static move_t	g_undo_stack[UNDO_STACK_SIZE];
 static int   g_undo_stack_index = 0;
 
 /* FUNCTIONS */
