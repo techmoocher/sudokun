@@ -3,11 +3,29 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0' # Runs every Sunday at midnight
+
+permissions:
+  contents: write
+
 jobs:
-  contrib-readme-job:
+  update-contributors-readme:
     runs-on: ubuntu-latest
     steps:
-      - name: Contribute List
-        uses: akhilmhdh/contributors-readme-action@v2.3.6
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Update Contributors in README
+        uses: akhilmhdh/contributors-readme-action@v2.3.10
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "docs: updated contributors list" || echo "No changes to commit"
+          git push origin main

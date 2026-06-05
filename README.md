@@ -55,7 +55,7 @@ To print a PDF with a hard sudoku run `nudoku -p riddle.pdf -d hard`.
 To get a PNG with an easy sudoku run `nudoku -P sudoku.png -d easy`.
 See `man nudoku` to learn more.
 
-## I18n
+### I18n
 
 For i18n support, make sure to set the `LANGUAGE` variable:
 
@@ -112,7 +112,7 @@ msgfmt vi.po    # Expecting no output
 git push origin es
 ```
 
-### Contributors
+## Contributors
 
-<!-- CONTRIBUTORS -start -->
-<!-- CONTRIBUTORS -end -->
+<!-- CONTRIBUTORS:START -->
+<!-- CONTRIBUTORS:END -->
