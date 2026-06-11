@@ -653,15 +653,14 @@ int main(int argc, char *argv[])
 	parse_arguments(argc, argv);
 	srand(time(NULL));
 
-	if (g_output_stream)
-	{
+	if (g_output_stream) {
 		generate_stream_output(g_difficulty);
 		return EXIT_SUCCESS;
 	}
 
 	if (g_outputFilename) {
 #ifdef ENABLE_CAIRO
-        return generate_output(g_difficulty, g_outputFilename, g_outIsPDF, g_pdfSize);
+        return export_generated_file(g_difficulty, g_outputFilename, g_outIsPDF, g_pdfSize);
 #else
         printf(_("sudokun was compiled without cairo.\n"));
         printf(_("To export sudokus, please compile with '--enable-cairo'.\n"));

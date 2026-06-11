@@ -18,30 +18,28 @@
  *
 */
 
-/* INCLUDES */
-#include "utils.h"		/* utility definitions */
-#include <stdlib.h>		/* rand, malloc */
-#include <time.h>		/* time */
-#include <string.h>		/* strdup */
-#include "sudoku.h"		/* enum */
-#include "unistd.h"		/* sleep */
+/*** INCLUDES ***/
+#include "sudoku.h"
+#include "unistd.h"
+#include "utils.h"
 
-/* FUNCTIONS */
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+/*** FUNCTIONS ***/
 
 /* SOLVER */
-bool is_valid_puzzle(char puzzle[STREAM_LENGTH])
-{
-	int rowEntry, colEntry, squareEntry;
+bool is_valid_puzzle(char puzzle[STREAM_LENGTH]) {
+    int rowEntry, colEntry, squareEntry;
 
-	int rowEntryCounter[9] = {0};
-	int colEntryCounter[9] = {0};
-	int squareEntryCounter[9] = {0};
+    int rowEntryCounter[9] = {0};
+    int colEntryCounter[9] = {0};
+    int squareEntryCounter[9] = {0};
 
-	for(int row=0; row<9; row++)
-	{
-		// count occurrences of digits in each row, column and square
-		for (int col=0; col<9; col++)
-		{
+    for (int row = 0; row < 9; row++) {
+        // count digit occurrences in each row, col, and square
+        for (int col = 0; col < 9; col++) {
 			// get the entries for one row, col and the whole square
 			rowEntry = puzzle[row * 9 + col];
 			colEntry = puzzle[col * 9 + row];
@@ -81,8 +79,10 @@ static int get_candidates(char puzzle[STREAM_LENGTH], int pos) {
     int mask = 0;
 
     for (int i = 0; i < 9; i++) {
-        if (puzzle[row * 9 + i] != '.') mask |= 1 << (puzzle[row * 9 + i] - '1');
-        if (puzzle[i * 9 + col] != '.') mask |= 1 << (puzzle[i * 9 + col] - '1');
+        if (puzzle[row * 9 + i] != '.')
+            mask |= 1 << (puzzle[row * 9 + i] - '1');
+        if (puzzle[i * 9 + col] != '.')
+            mask |= 1 << (puzzle[i * 9 + col] - '1');
         if (puzzle[(box_row + i / 3) * 9 + box_col + i % 3] != '.')
             mask |= 1 << (puzzle[(box_row + i / 3) * 9 + box_col + i % 3] - '1');
     }
@@ -160,6 +160,7 @@ int solve(char puzzle[STREAM_LENGTH]) {
 
     return count;
 }
+
 /* GENERATOR */
 /* Generator code is influenced by: http://rubyquiz.strd6.com/quizzes/182-sudoku-generator */
 static int rand_int(int n)
@@ -271,22 +272,20 @@ static void punch_holes(char *stream, int count)
 	}
 }
 
-const char* difficulty_to_str(DIFFICULTY level)
-{
-	switch(level)
-	{
-		case D_HARD:
-			return _("hard");
-		case D_NORMAL:
-			return _("normal");
-		case D_EASY:
+const char* difficulty_to_str(DIFFICULTY level) {
+    switch(level) {
+        case D_HARD:
+            return _("hard");
+        case D_NORMAL:
+            return _("normal");
+        case D_EASY:
+            return _("easy");
 		default:
-			return _("easy");
+			return _("N/A");
 	}
 }
 
-char* generate_puzzle(int holes)
-{
+char* generate_puzzle(int holes) {
 	char* stream;
 
 	stream = generate_seed();
