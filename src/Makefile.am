@@ -2,17 +2,17 @@
 #-DDEBUG
 
 if HAVE_WIDE_NCURSES
-nudoku_LDADD = ${ncursesw_LIBS}
+sudokun_LDADD = ${ncursesw_LIBS}
 else
-nudoku_LDADD = ${ncurses_LIBS}
+sudokun_LDADD = ${ncurses_LIBS}
 endif
 bin_PROGRAMS = sudokun
-nudoku_SOURCES = main.c sudoku.c sudoku.h utils.c utils.h
+sudokun_SOURCES = main.c sudoku.c sudoku.h utils.c utils.h
 
 if BUILD_CAIRO
-nudoku_SOURCES += outp.c outp.h
+sudokun_SOURCES += outp.c outp.h
 AM_CFLAGS := @CAIRO_CFLAGS@
-nudoku_LDADD += @CAIRO_LIBS@
+sudokun_LDADD += @CAIRO_LIBS@
 endif
 
 AM_CPPFLAGS = -DLOCALEDIR=\""$(localedir)"\"
