@@ -1,3 +1,14 @@
+sudoku 0.1.0 (2026-06-12)
+	* Forked from nudoku 8.0.0.
+	* Rebranded the project name to sudokun.
+	* Updated build systems (configure.ac, Makefile.am).
+	* Updated the man page.
+	* Removed multiple sudokus export option.
+
+=======================================================
+							nudoku CHANGELOG (upstream)
+=======================================================
+
 7.0.0 to 8.0.0 (2026-04-16)
   * Add option -S to customize PDF paper size (pr #85 #87)
   * Add Georgian and Vietnamese translation (pr #81 #82)
