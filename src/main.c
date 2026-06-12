@@ -80,7 +80,7 @@ static WINDOW       *grid, *infobox, *status;
 
 static int          g_hint_count            = 0;
 static bool         g_playing               = false;
-static DIFFICUTLY   g_difficulty            = D_EASY;
+static DIFFICULTY   g_difficulty            = D_EASY;
 static char         plain_board[STREAM_LENGTH];
 static char         user_board[STREAM_LENGTH];
 
@@ -792,7 +792,7 @@ int main(int argc, char *argv[])
 				break;
 	    	case 'N':
 				g_useHighlights = false;
-				g_hint_counter = 0;
+				g_hint_count = 0;
 				g_undo_stack_index = 0;
 
 				werase(status);
@@ -830,10 +830,9 @@ int main(int argc, char *argv[])
 						{
 							mvwprintw(status, 0, 0, _("Solved"));
 
-							if (g_hint_counter > 0)
-							{
+							if (g_hint_count > 0) {
 								char t[256];
-								sprintf(t, _(" with the help of %d hints"), g_hint_counter);
+								sprintf(t, _(" with the help of %d hints"), g_hint_count);
 								mvwprintw(status, 0, 6, "%s", t);
 							}
 
@@ -866,9 +865,8 @@ int main(int argc, char *argv[])
 					break;
 				}
 			case 'H':
-				if (g_playing && hint())
-				{
-					g_hint_counter++;
+				if (g_playing && hint()) {
+					g_hint_count++;
 					fill_grid(user_board, plain_board, x, y);
 					werase(status);
 					mvwprintw(status, 0, 0, _("Provided hint"));
