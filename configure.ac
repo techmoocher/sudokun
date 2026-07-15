@@ -40,7 +40,7 @@ have_wide_ncurses=no
 PKG_CHECK_MODULES([ncursesw], [ncursesw], [have_wide_ncurses=yes], [])
 if test $have_wide_ncurses = no; then
    PKG_CHECK_MODULES([ncurses], [ncurses], [], [ 
-   echo "nudoku requires ncurses"
+   echo "sudokun requires ncurses"
    exit 1
    ])
 fi

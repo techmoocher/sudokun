@@ -1,4 +1,4 @@
-sudoku 0.1.0 (2026-06-12)
+sudokun 0.1.0 (2026-06-12)
 	* Forked from nudoku 8.0.0.
 	* Rebranded the project name to sudokun.
 	* Updated build systems (configure.ac, Makefile.am).
@@ -8,6 +8,9 @@ sudoku 0.1.0 (2026-06-12)
 =======================================================
 							nudoku CHANGELOG (upstream)
 =======================================================
+8.0.0 to 8.0.1 (2026-07-08)
+  * Terminate save game loading when the input is too long (pr #89)
+  * Update Ukranian and Turkish translation (pr #90 #91)
 
 7.0.0 to 8.0.0 (2026-04-16)
   * Add option -S to customize PDF paper size (pr #85 #87)

@@ -1,5 +1,5 @@
-.\" Manpage for sudokun.
-.\" Contact Benjamin Nguyen <ima.techmoocher@gmail.com> in case of bugs or errors.
+." Manpage for sudokun.
+." Contact Benjamin Nguyen <ima.techmoocher@gmail.com> in case of bugs or errors.
 .TH SUDOKUN 6 "June 2026" "sudokun v1.0.0" "sudokun man page"
 
 .SH NAME
@@ -37,6 +37,7 @@ Prints the version information.
 Prints the help menu.
 
 .B \-r
+.br
 Resumes your saved game.
 The saved game is stored in $XDG_STATE_HOME/sudokun/ and will be deleted upon a successful resume.
 
@@ -63,7 +64,7 @@ The provided input should be in stream format, i.e. everthing in one line and us
 .br
 Example: \fBsudokun -s\fR \fI4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......\fR
 
-.B \-p <\fIoutput_filename.pdf\R>
+.B \-p <\fIoutput_filename.pdf\fR>
 .br
 Exports a game into a PDF.
 Must be followed by an expected filename.
@@ -84,9 +85,9 @@ Example: \fBsudokun -P\fR \fIsudoku.png\fR
 
 Use [h][j][k][l] or arrow keys ([←][↓][↑][→]) to navigate.
 
-Press a number [1-9] to fill the current cell. 
+Press a number [1-9] to fill the current cell.
 
-Use [Delete], [Backspace], or [x] to clear the current cell. 
+Use [Delete], [Backspace], or [x] to clear the current cell.
 
 .BR [c]
 Check whether your current solution is correct.
