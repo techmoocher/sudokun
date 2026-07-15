@@ -6,7 +6,7 @@ nudoku_LDADD = ${ncursesw_LIBS}
 else
 nudoku_LDADD = ${ncurses_LIBS}
 endif
-bin_PROGRAMS = nudoku
+bin_PROGRAMS = sudokun
 nudoku_SOURCES = main.c sudoku.c sudoku.h utils.c utils.h
 
 if BUILD_CAIRO

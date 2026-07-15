@@ -1,37 +1,40 @@
-# nudoku #
+# sudokun
 
-nudoku is a ncurses based sudoku game.
+**sudokun** is an ncurses-based sudoku game for CLI. Sudoku's long been my favorite activities to entertain. 
+However, sometimes, I simply don't want to leave the terminal. That's why **sudokun** was born!
 
-## Install ##
+Big shout-out to **[jubalh/nudoku](https://github.com/jubalh/nudoku.git)** for huge inspiration!!!
+
+## Installation
 
 nudoku is easily installable via many package managers.
 
 [![Packaging status](https://repology.org/badge/tiny-repos/nudoku.svg)](https://repology.org/project/nudoku/versions)
 
-#### Dependency ###
+**Dependencies:**
 - ncurses
-- cairo (optional: for PDF/PNG output)
+- cairo (optional: for PDF/PNG export)
 
-#### From source ####
+### Building from source
 
-Get the latest `.tar.xz` [release](https://github.com/jubalh/nudoku/releases) and extract it.
+Get the latest `.tar.xz` [release](https://github.com/jubalh/nudoku/releases) and extract it. 
 Then run:
 
-```sh
+```bash
 ./configure
 make
-./src/nudoku
+./src/sudokun
 ```
 
-For the git version you will have to do:
+If you decide to go by the git version, run the below commands instead:
 
-```sh
-git clone https://github.com/jubalh/nudoku
-cd nudoku
+```bash
+git clone https://github.com/techmoocher/sudokun.git
+cd sudokun
 autoreconf -i
 ./configure
-make
-./src/nudoku
+make # Use -DDEBUG option if you want the debug output
+./src/sudokun
 ```
 
 Add `-DDEBUG` to `make` to have some debug output.
@@ -43,7 +46,7 @@ You need to have cairo installed and configure with:
 ./configure --enable-cairo
 ```
 
-## Usage ##
+## Usage
 
 For normal interactive GUI run `nudoku`.
 To print two PDF pages with 8 hard sudokus run `nudoku -p riddle.pdf -n 8 -d hard`.
@@ -52,7 +55,7 @@ See `man nudoku` to learn more.
 
 ## I18n ##
 
-For i18n support you need to set `LANGUAGE` variable:
+For i18n support, you need to set the `LANGUAGE` variable:
 
 ```sh
 export LANGUAGE=lang
@@ -60,7 +63,7 @@ export LANGUAGE=lang
 
 Where `lang` is the translation of choice. See the list of supported languages in `po/LINGUAS` file.
 
-## Contributing ##
+## Contributing
 
 If you plan to add/update the translation please follow these guidelines with examples:
 
